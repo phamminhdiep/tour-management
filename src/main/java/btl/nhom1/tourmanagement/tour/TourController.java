@@ -1,9 +1,11 @@
 package btl.nhom1.tourmanagement.tour;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,9 +35,11 @@ public class TourController {
 		return tourRepository.findById(id).get();
 	}
 	
-	@PostMapping("/tour")
-	public void addTour(@RequestBody Tour tour) {
-		tourRepository.save(tour);
+	@PostMapping("/tours")
+	public ResponseEntity<Tour> addTour(@RequestBody Tour tour) {
+		Tour savedTour = tourRepository.save(tour);
+		URI tourURI = URI.create("/tours/" +savedTour.getId());
+		return ResponseEntity.created(tourURI).body(savedTour);
 	}
 	
 }
