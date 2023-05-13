@@ -44,7 +44,9 @@ public class TourController {
     @PostMapping
     public ResponseEntity<Tour> createTour(@RequestBody Tour tour) {
         Tour createdTour = tourRepository.save(tour);
+        System.out.println(createdTour + "ok");
         return new ResponseEntity<>(createdTour, HttpStatus.CREATED);
+        
     }
 
     @PutMapping("/{id}")
